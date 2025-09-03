@@ -1,4 +1,3 @@
-import { writeFileSync } from 'node:fs';
 import 'dotenv/config';
 import { createPage } from './services/browser.js';
 import { acceptCookies, goToCatalogsPage, scrapeCatalogs } from './services/catalogs.js';
@@ -10,11 +9,7 @@ import { acceptCookies, goToCatalogsPage, scrapeCatalogs } from './services/cata
 	
 	await acceptCookies(page);
 	await goToCatalogsPage(page);
-	
-	const catalogs = await scrapeCatalogs(page);
-	
-	writeFileSync('src/db/catalogs.json', JSON.stringify(catalogs, null, 2));
-	console.log('Збережено catalogs.json');
+	await scrapeCatalogs(page);
 	
 	await browser.close();
 })();
